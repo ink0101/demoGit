@@ -27,17 +27,22 @@ function prepareGallery(){
 	var links = gallery.getElementsByTagName('a');
 	for(var i=0;i<links.length;i++){
 		links[i].onclick=function(){
-			showPic(this);
-			return false;
+			return !showPic(this);
 		}
 	}
 }
 //显示图片
 function showPic(whichpic) {
+	if (!document.getElementById('placeholder')) {
+		return false;
+	}
 	var source = whichpic.getAttribute('href');
 	var placeholder = document.getElementById('placeholder');
 	placeholder.setAttribute('src',source);
-	var title = whichpic.getAttribute('title');
-	var description = document.getElementById('description').firstChild;
-	description.nodeValue=title;
+	if (document.getElementById('description')) {
+		var title = whichpic.getAttribute('title');
+		var description = document.getElementById('description').firstChild;
+		description.nodeValue=title;
+	}
+	return true;//虽然不太明白是为什么，但是不能删掉哦
 }
