@@ -27,7 +27,9 @@ function prepareGallery(){
 	var links = gallery.getElementsByTagName('a');
 	for(var i=0;i<links.length;i++){
 		links[i].onclick=function(){
-			return !showPic(this);
+			if (showPic(this)) {
+				return showPic(this)?false:true;
+			}
 		}
 	}
 }
@@ -38,11 +40,16 @@ function showPic(whichpic) {
 	}
 	var source = whichpic.getAttribute('href');
 	var placeholder = document.getElementById('placeholder');
+	if (placeholder.nodeName!='IMG') {
+		return false;
+	}
 	placeholder.setAttribute('src',source);
 	if (document.getElementById('description')) {
-		var title = whichpic.getAttribute('title');
+		var title = whichpic.getAttribute('title')?whichpic.getAttribute('title'):'';
 		var description = document.getElementById('description').firstChild;
-		description.nodeValue=title;
+		if (description.nodeType==3) {
+			description.nodeValue=title;
+		}
 	}
 	return true;//虽然不太明白是为什么，但是不能删掉哦
 }
