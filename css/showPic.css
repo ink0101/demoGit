@@ -26,3 +26,7 @@ img{
 p{
 	margin-top: 1em;
 }
+#placeholder{
+	border:1px solid #999;
+	padding: 4px;
+}
