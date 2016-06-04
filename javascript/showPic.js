@@ -12,6 +12,15 @@ function addLoadEvent(func){
 		}
 	}
 }
+	//编写与insertBefore相对的insertAfter函数
+function insertAfter(newElenent,targetElemet){
+	var parent=targetElemet.parentNode;
+	if (parent.lastNode==targetElemet) {
+		parent.appendChild('newElenent');
+	}else{
+		parent.insertBefore(newElenent,targetElemet.nextSibling);
+	}
+}
 
 
 //绑定onload事件
@@ -57,6 +66,10 @@ function showPic(whichpic) {
 }
 //创建placeholder图片和description说明
 function preparePlaceholder(){
+	if (!document.createElement) {return false;}
+	if (!document.createTextNode) {return false;}
+	if (!document.getElementById) {return false;}
+	if (!document.getElementById('imagegallery')) {return false;}
 	var placeholder=document.createElement('img');
 	var description=document.createElement('p');
 	placeholder.setAttribute('id','placeholder');
@@ -67,6 +80,7 @@ function preparePlaceholder(){
 	var desctxt=document.createTextNode('show img');
 	description.appendChild(desctxt);
 
-	document.getElementsByTagName('body')[0].appendChild(placeholder);
-	document.getElementsByTagName('body')[0].appendChild(description);
+	var gallery=document.getElementById('imagegallery');
+	insertAfter(placeholder,gallery);
+	insertAfter(description,placeholder);
 }
